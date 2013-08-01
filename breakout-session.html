@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>JavaScript &amp; jQuery - CodeFest 2.0 Breakout Session</title>
+
+		<meta name="description" content="CodeFest 2.0 Breakout Session">
+		<meta name="author" content="Pat Heard">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+		<div class="slides">
+    <section data-background-size="initial">
+        <h1 style="max-height: none; max-width: none; text-shadow: 0 0 10px rgba(0,0,0,0.5)">
+JavaScript &amp; jQuery
+</h1>
+<h2 style="text-transform: none;">CodeFest 2.0 Breakout Session</h2>
+<p>
+<a href="https://github.com/patheard/">@patheard</a> / PWGSC</p>
+
+
+
+
+
+
+
+
+
+</section>
+        <section>
+            <h2>Overview</h2>
+<p>
+        </p>
+<ul>
+<li>JavaScript</li>
+<li>jQuery</li>
+<li>Debugging</li>
+<li>Performance</li>
+<li>WET</li>
+</ul>
+    </section>
+    <section>
+        <h2>10,000 Foot View</h2>
+<div>
+        <ul>
+<li>Untyped, i<span>nterpreted language</span>
+    </li>
+<li>Well suited for object-oriented&nbsp;<span>programming</span>
+</li>
+<li>Uses prototypal inheritance</li>
+<li>Bumpy learning curve</li>
+</ul>
+</div>
+</section>
+<section>
+    <section>
+        <h2>Types</h2>
+<div>
+<p>
+    </p>
+<ul>
+<li>
+<b>
+    <font style="background-color: rgba(217, 217, 217, 0);" color="#93c47d">Two types</font>
+</b>
+<br>primitive and object<br>
+<br>
+</li>
+<li>
+<span style="font-size: 36px; font-style: normal; font-variant: normal;">
+<b>
+<font color="#93c47d">Primitive</font>
+</b>
+</span>
+<br>Number, string, boolean, null and undefined<br>
+<br>
+</li>
+<li>
+<b>
+<font color="#93c47d">Object</font>
+</b>
+<br>Collection of named properties<br>
+<br>
+<br>
+</li>
+</ul>
+</div>
+</section>
+
+
+</section>
+<section>
+    <section>
+        <h2>Variables</h2>
+<div>
+<ul>
+<li>Declare with&nbsp;<font color="#93c47d">
+<b>var</b>&nbsp;</font>keyword</li>
+<li>Dynamically typed</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>// i has a value of undefined
+var i;
+
+// i, j and k are undefined
+var i, j, k;  
+
+// i, j and k are defined
+var i = 1, j = "foo", k = false;</code></pre>
+</div>
+</div>
+</section>
+    <section>
+<h2>Variable Scope</h2>
+<div>
+<ul>
+<li>
+<b>
+<font color="#93c47d">Function&nbsp;Scope</font>
+</b>
+<br>Available to their function and&nbsp;nested functions</li>
+<li>
+<b>
+<font color="#93c47d">Scope Chain</font>
+</b>
+<br>Local takes precedence</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>var scope = "global";
+function getGlobal () {
+  return scope;
+}
+function getLocal () {
+  var scope = "local";
+  return scope;
+}
+console.log(getGlobal()); // "global"
+console.log(getLocal());  // "local"</code></pre>
+</div>
+</div>
+</section>
+    <section>
+<h2>Variable Hoisting</h2>
+<div>
+<ul>
+<li>Variables are visible throughout function body</li>
+<li>
+<span>Define all variables at the top</span>
+<br>
+</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>var scope = "global";
+function outputScope () {
+  console.log(scope); // undefined
+  var scope = "local";
+  console.log(scope); // "local"
+}
+outputScope();</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section>
+    <section>
+        <h2>Functions</h2>
+<div>
+<ul>
+<li>Declare with <font color="#93c47d">
+        <b>function</b>&nbsp;</font>keyword</li>
+<li>Re-usable chunks of code</li>
+<li>Functions define parameters and return value</li>
+        <li>Functions are objects</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>// function that takes 2 parameters</code><code>function multiply (a, b) {</code><code>  return a * b;</code><code>}</code><code>// calling the function with 2 arguments</code><code>multiply(2, 3); // 6</code><code>multiply.call({}, 4, 5); // 20</code></pre>
+</div>
+<br>
+</div>
+</section>
+<section>
+    <h2>Using Functions</h2>
+<div>
+<ul>
+<li>Assigning to variables</li>
+<li>Properties of objects (methods)</li>
+<li>Anonymous (event handlers, timers)</li>
+<li>Constructors (new keyword)</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>var hello = function () {</code><code>  return "Hello World";</code><code>};</code><code>var me = {</code><code>  feeling: function (say) {</code><code>    return "Feeling "  + say;</code><code>  }</code><code>};</code></pre>
+</div>
+</div>
+</section>
+<section>
+    <h2>Closures</h2>
+<div>
+<ul>
+<li>
+    <span>
+        <b>
+        <font color="#93c47d">Special object</font>
+    </b>
+    <br>Consists of a function and the environment the function<br>was created in</span>
+</li>
+<li>Environment holds <b>
+<font color="#93c47d">all variables</font>
+</b> that are in scope<br>when the closure is created</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>function sayHello(name) {
+    var phrase = "Howdy " + name;</code><code>    var called = 0;</code><code>    return function(emoticon) {</code><code>        return phrase + " " + emoticon + " " + (++called);</code><code>    };
+}</code><code>var pat = sayHello("Pat");</code><code>console.log(pat(":)")); // "Howdy Pat :) 1"</code><code>console.log(pat(":/")); // "Howdy Pat :/ 2"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section>
+    <h2>Operators</h2>
+<div>
+<ul>
+    <li>Used for assignment, comparison, arithmetic<br>and logical operations<br>
+</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>=               // assignment</code><code>==, !=          // equality, inequality</code><code>===, !==        // strict equality, inequality (type must match)</code><code>&lt;, &lt;=, &gt;=, &gt;    // greater and less than</code><code>+, -, *, /      // arithmetic operations and string concat</code><code>++, --          // pre/post increment and decrement</code><code>+=, *=, -=, /=  // arithmetic and assignment</code><code>%               // module (remainder)</code><code>&amp;&amp;, ||, !       // logical AND, OR, NOT</code><code>?:              // conditional operator (ternary operator)</code></pre>
+</div>
+</div>
+<div>
+<br>
+</div>
+<div>
+<br>
+</div>
+</section>
+<section>
+    <section>
+        <h2>Program Flow</h2>
+<div>
+        <ul>
+<li>
+<b>
+        <font color="#93c47d">Conditionals</font>
+    </b>
+    <br>if, else if, switch<br>
+    <br>
+</li>
+<li>
+<b>
+    <font color="#93c47d">Loops</font>
+</b>
+<br>while, do/while, for<br>
+<br>
+</li>
+<li>
+<b>
+<font color="#93c47d">Jumps</font>
+</b>
+<br>break, continue</li>
+</ul>
+</div>
+</section>
+<section>
+    <h2>Conditionals</h2>
+<div>
+<pre><code>if (answer === 42) {
+  // Do something fancy</code><code>} else {</code><code>  // Do something less fancy</code><code>}</code></pre><pre><code>switch(n) {</code><code>  case 1: </code><code>    // logic for n == 1</code><code>    break; &nbsp;</code><code>  case 2:</code><code>    // logic for n == 2</code><code>    break;</code><code>  default:</code><code>    // logic if no matching case</code><code>    break; 
+}</code></pre>
+</div>
+</section>
+<section>
+    <h2>Loops</h2>
+<div>
+<pre><code>var count = 0;
+while (count++ &lt; 10) {
+  // loop 10 times
+}</code></pre><pre><code>do {</code><code>  // loop 11 times</code><code>} while (count++ &lt; 10);</code></pre><pre><code>for (var i = 0, l = a.length; i &lt; l; i++) {</code><code>  console.log(a[i]); // loop over an array</code><code>}</code></pre><pre><code>for (var p in o) {</code><code>  console.log(p + ": " + o[p]); // loop over object properties</code><code>}</code></pre>
+</div>
+</section>
+<section>
+<h2>Jumps</h2>
+<div>
+<pre><code>var count = 0;</code><code>while (count++ &lt; 10) {</code><code>  if (count === 8) {</code><code>    break; // jumps out of the loop </code><code>  } else if (count === 3) {</code><code>    continue; // jumps to next iteration of the loop </code><code>  }</code><code>  console.log(count);</code><code>}</code></pre>
+<br>
+</div>
+</section>
+</section>
+<section>
+    <section>
+        <h2>Objects</h2>
+        <div>
+            <ul>
+                <li>Unordered collection of named properties</li>
+                <li>Dynamically add/delete properties</li>
+                <li>
+                    <span>Inherits properties from another object,<br>
+                    </span>called its&nbsp;<b>
+                    <font color="#93c47d">prototype</font>
+                </b>
+            </li>
+        </ul>
+
+</div>
+</section>
+
+<section>
+    <h2>THIS</h2>
+    <div>
+        <ul>
+            <li>Reference to an object<br>
+                <br>
+            </li>
+            <li>
+                <b>
+                <font color="#93c47d">Global context</font>
+            </b>
+            <br>Refers to global object (window)<br>
+            <br>
+        </li>
+        <li>
+            <b>
+            <font color="#93c47d">Function context</font>
+        </b>
+        <br>Depends on how function is called<br>
+        <br>
+    </li>
+    <li>
+        <b>
+        <font color="#93c47d">Constructor or Object method</font>
+    </b>
+    <br>Refers to the object<br>
+    <br>
+</li>
+</ul>
+</div>
+</section>
+
+<section>
+    <h2>Creating Objects</h2>
+    <div>
+        <ul>
+            <li>Object literal notation</li>
+            <li>Constructor and <b>
+                <font color="#93c47d">new </font>
+                </b>keyword</li>
+                <li>Object.create</li>
+            </ul>
+        <div style="text-align: left;">
+<pre><code>var obj = {</code><code>  prop1 : "foo",</code><code>  prop2 : "bar",</code><code>  someMethod : function () {</code><code>    return this.prop1 + this.prop2;</code><code>  }</code><code>};</code><code>obj.someMethod();</code></pre>
+    </div>
+        </div>
+    </section>
+    <section>
+        <h2>Constructors and NEW</h2>
+        <div>
+<pre><code>function Shape(x, y) {</code><code>  this.x = x;</code><code>  this.y = y;</code><code>  this.getArea = function () {</code><code>    return this.x * this.y;</code><code>  }</code><code>}</code><code>var s = new Shape(5, 5);</code><code>s.getArea();</code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Prototype</h2>
+    <div>
+        <pre><code>function Shape(x, y) {</code><code>  this.x = x;</code><code>  this.y = y;</code><code>}</code><code>Shape.prototype = {</code><code>  getArea: function () {&nbsp;</code><code>    return this.x * this.y;</code><code>  }</code><code>};</code><code>
+function Rectangle(x, y) {
+  Shape.call(this, x, y);
+}
+Rectangle.prototype = Object.create(Shape.prototype);</code><code>
+var r = new Rectangle(10, 5);
+r.getArea();</code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Properties</h2>
+    <div>
+        <ul>
+            <li>Use dot or square brackets</li>
+            <li>Square brackets allow for dynamic <br>property access</li>
+        </ul>
+        <div style="text-align: left;">
+<pre><code>var o = {</code><code>  x: 1</code><code>};</code><code>o.x;     // 1</code><code>o['x'];  // 1</code><code>var prop = 'x';</code><code>o[prop]; // 1</code></pre>
+    </div>
+</div>
+</section>
+<section>
+    <h2>Arrays</h2>
+    <div>
+        <ul>
+            <li>
+                <span>Ordered collection of values</span>
+                <br>
+            </li>
+            <li>Elements are untyped</li>
+            <li>Use the <b>
+                <font color="#93c47d">.length</font>
+                </b> property to iterate</li>
+            </ul>
+            <div style="text-align: left;">
+<pre><code>var a = [1, 2, 3];</code><code>a.push(4); // Add an element to the end</code><code>a.pop();   // Remove the last element</code><code>for (var i = 0, l = a.length; i &lt; l; i++) {</code><code>  console.log(a[i]);</code><code>}</code></pre><pre><code>var b = new Array();</code><code>b["cat"] = "meow";</code><code>b.dog = "woof";</code></pre>
+        </div>
+    </div>
+</section>
+</section>
+<section>
+    <section>
+        <h2>jQuery</h2>
+<div>
+        <ul>
+<li>
+<div style="text-align: left;">
+        <b style="text-align: center;">
+            <font color="#93c47d">Simplifies Code</font>
+        </b>
+    </div>
+<span style="text-align: center;">
+    <div style="text-align: left;">
+        <span>DOM traversal/manipulation<br>
+            <div style="text-align: left;">
+<span style="text-align: center;">Event handling<br>
+        </span>
+        <span style="text-align: center;">Animation<br>
+        </span>
+        <span style="text-align: center;">AJAX</span>
+</div>
+    </span>
+</div>
+</span>
+</li>
+<li>
+<span style="text-align: center;">Smooths out cross-browser issues</span>
+</li>
+<li>
+<span style="text-align: center;">API:&nbsp;</span>
+<a href="http://api.jquery.com/" style="text-align: center;">api.jquery.com</a>
+<br>
+</li>
+</ul>
+</div>
+</section>
+<section>
+    <h2>jQuery Objects</h2>
+<div>
+<ul>
+<li>Core element you work with</li>
+<li>Reference to DOM element(s)</li>
+<li>Created with $() function</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>// CSS selectors</code><code>var $h1 = $('h1'),</code><code>    $notes = $('p.notes'),</code><code>    $firstNote = $notes.filter(':first-child');</code><code>// DOM elements</code><code>var p = document.getElementById('foo'),</code><code>    $p = $(p);  // or even easier, $('#foo')</code></pre>
+</div>
+</div>
+</section>
+<section>
+    <h2>CSS Classes &amp; Styles</h2>
+    <div>
+        <ul>
+            <li>
+                <b>
+                <font color="#93c47d">Update styles</font>
+            </b>
+            <br>.css()<br>
+            <br>
+        </li>
+        <li>
+            <b>
+            <font color="#93c47d">Update classes</font>
+        </b>
+        <br>.add/remove/toggleClass()</li>
+    </ul>
+    <div style="text-align: left;">
+<pre><code>var $notes = $('#content &gt; .notes');</code><code>$notes.css('background-color', 'red');</code><code>$notes.css({</code><code>  opacity: .5,&nbsp;</code><code>  fontSize: '1em'</code><code>});</code><code>$notes.addClass('big').removeClass('red');</code><code>$notes.toggleClass('big');</code></pre>
+</div>
+</div>
+</section>
+<section>
+    <h2>Attributes and Properties</h2>
+    <div>
+        <ul>
+            <li>
+                <b>
+                <font color="#93c47d">Attributes</font>
+            </b>
+            <br>attr()<br>
+            <br>
+        </li>
+        <li>
+            <b>
+            <font color="#93c47d">Properties</font>
+        </b>
+        <br>prop() - use for boolean attributes and properties</li>
+    </ul>
+    <div style="text-align: left;">
+<pre><code>$('a').attr('href', 'http://google.ca');</code><code></code><code>$('input[type="checkbox"]').prop('checked', true);</code></pre>
+</div>
+</div>
+</section>
+<section>
+    <h2>Animation</h2>
+    <div>
+        <ul>
+            <li>Animates between current and <br>specified properties</li>
+            <li>Use CSS animation instead (if possible)</li>
+        </ul>
+        <div style="text-align: left;">
+            <pre><code>var $notes = $('.notes');</code><code>$notes.animate({height: 100}, 500, function () {</code><code>  console.log('finished animation!');</code><code>});</code></pre><pre><code>.notes {</code><code>  height: 50px;</code><code>  transition: height 1s ease-in;</code><code>}</code><code>.notes.taller {</code><code>  height: 100px;</code><code>}</code></pre>
+        </div>
+    </div>
+</section>
+<section>
+    <h2>Events</h2>
+    <div>
+        <ul>
+            <li>
+                <b>
+                <font color="#93c47d">React to something</font>
+            </b>
+            <br>"something" can be custom or predefined</li>
+            <li>Event handlers are bound to an element</li>
+            <li><strong style="color:#93c47d">this</strong> is the element that detected the event
+            </li>
+        </ul>
+    </div>
+</section>
+<section>
+    <h2>Event Handlers</h2>
+    <div>
+        <ul>
+            <li>Use the .on() and .off() methods</li>
+            <li>Trigger with .trigger()</li>
+        </ul>
+        <div style="text-align: left;">
+<pre><code>$('a').on('click', function(event) {</code><code>  $(this).text('clicked');</code><code>  event.preventDefault();</code><code>});</code><code>$('a').trigger('click');</code></pre>
+    </div>
+    <div style="text-align: left;">
+        <br>
+    </div>
+</div>
+</section>
+<section>
+    <h2>Traversal</h2>
+    <div>
+        <ul>
+            <li>
+                <div style="text-align: left;">
+                    <span style="text-align: center;">
+                        <font color="#ffffff">Move through the DOM<br>
+                            <br>
+                        </font>
+                    </span>
+                </div>
+                <div style="text-align: left;">
+                    <b style="text-align: center;">
+                        <font color="#93c47d">Up</font>
+                    </b>
+                </div>
+                <span style="text-align: center;">
+                    <div style="text-align: left;">
+                        <span>parent(), parents(), closest()<br>
+                            <br>
+                        </span>
+                    </div>
+                </span>
+            </li>
+            <li>
+                <span style="text-align: center;">
+                    <b>
+                    <font color="#93c47d">Down</font>
+                </b>
+                <br>children(), find()</span>
+            </li>
+        </ul>
+        <div>
+<pre><code>$('p').parent();</code><code>$('p').parents('div');</code><code>$('p').children();</code><code>$('p').filter('.foo').find('strong');</code></pre>
+    </div>
+</div>
+</section>
+<section>
+    <h2>Manipulation</h2>
+    <div>
+        <ul>
+            <li>Modify the DOM<br>
+                <br>
+            </li>
+            <li>
+                <b>
+                <font color="#93c47d">Add</font>
+            </b>
+            <br>.before(), .after(), .append(), .prepend()<br>
+            <br>
+        </li>
+        <li>
+            <b>
+            <font color="#93c47d">Remove</font>
+        </b>
+        <br>.detach(), .remove(), .empty()</li>
+    </ul>
+    <div style="text-align: left;">
+        <br>
+    </div>
+</div>
+</section>
+</section>
+<section>
+    <h2>Debugging</h2>
+<div>
+    <ul>
+<li>Chrome <a href="https://developers.google.com/chrome-developer-tools/">DevTools</a>
+</li>
+<li>Firefox with <a href="https://getfirebug.com/">Firebug</a>
+</li>
+<li>IE <a href="http://msdn.microsoft.com/en-us/library/gg589512(v=vs.85).aspx">Developer Tools</a>
+</li>
+</ul>
+</div>
+</section>
+<section>
+    <h2>Performance</h2>
+<div>
+<ul>
+<li>Use native JavaScript</li>
+<li>Cache variables for reuse</li>
+<li>Update the DOM sparingly and apply<br>changes in one shot</li>
+<li>Change CSS classes, not styles</li>
+<li>Use CSS animations</li>
+<li>
+    <b>
+    <font color="#93c47d">TEST</font>
+</b>
+<br>
+<a href="http://jsperf.com/">jsperf.com</a> or home grown:</li>
+</ul>
+<div style="text-align: left;">
+<pre><code>var t = new Date().getTime();</code><code>// Do some stuff</code><code>console.log(new Date().getTime() - t);</code></pre>
+</div>
+</div>
+</section>
+<section>
+    <h2>WET</h2>
+<div>
+<ul>
+<li>
+<b>
+    <font color="#93c47d">pe-ap.js &amp; theme.js</font>
+</b>
+<br>Core<br>
+<br>
+</li>
+<li>
+<b>
+<font color="#93c47d">Polyfills,&nbsp;</font>
+</b>
+<span>
+    <b>
+    <font color="#93c47d">plugins &amp; dependencies</font>
+</b>
+<br>Workers<br>
+<br>
+</span>
+</li>
+<li>
+<b>
+<font color="#93c47d">jQuery &amp; jQuery Mobile</font>
+</b>
+<br>Libraries<br>
+<br>
+</li>
+<li>
+<b>
+<font color="#93c47d">i18n/en-min.js</font>
+</b>
+<br>Localization</li>
+</ul>
+<div style="text-align: left;">
+<br>
+</div>
+</div>
+</section>
+
+<section>
+    <h2>Questions?</h2>
+</section>
+
+</div>
+
+
+			
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
